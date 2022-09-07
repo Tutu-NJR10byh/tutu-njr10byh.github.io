@@ -10,32 +10,49 @@
   <script src="./js/axios.js"></script>
 </head>
 
-<body onclick="Backtopimg()">
+<body onload="judgeBrowser()" onclick="Backtopimg()">
   <div id="loginpage" class="container">
     <div class="box">
       <div>
         <img src="./img/loginpage.png" alt="请登录" width="100%" height="220px" id="topimg" />
       </div>
       <div class="toptext">南京邮电大学研究生培养基本规定测试</div>
-      <div class="user">
-        <div class="username">
-          <img src="./img/username.png" width="20px" height="20px" />
-          <input type="text" placeholder="请输入姓名" onclick="ChangeTopimg1()" id="name" />
-        </div>
-        <div class="password">
-          <img src="./img/number.png" width="20px" height="20px" />
-          <input type="text" placeholder="请输入工号" onclick="ChangeTopimg2()" id="number" />
-        </div>
-      </div>
-      <button type="submit" onclick="Tologin()">
-        <img src="./img/Login.png" alt="登录" width="80px" height="80px" />
-      </button>
+      <div id="notice" style="margin-top: 10px;color: red;font-weight: bold;">请点击右上角三个点，使用手机默认浏览器作答</div>
+     <div id="loginMoudle" style="display: flex;flex-direction: column;justify-content: center;align-items: center;">
+       <div class="user">
+         <div class="username">
+           <img src="./img/username.png" width="20px" height="20px" />
+           <input type="text" placeholder="请输入姓名" onclick="ChangeTopimg1()" id="name" />
+         </div>
+         <div class="password">
+           <img src="./img/number.png" width="20px" height="20px" />
+           <input type="text" placeholder="请输入工号" onclick="ChangeTopimg2()" id="number" />
+         </div>
+       </div>
+       <button type="submit" onclick="Tologin()">
+         <img src="./img/Login.png" alt="登录" width="80px" height="80px" />
+       </button>
+     </div>
       <div class="design">Designed by Xu-Zhiyuan & Bao-Yuhao in NJUPT</div>
     </div>
   </div>
 </body>
 
 <script>
+  function judgeBrowser() {
+    console.log("aaa")
+    document.getElementById("notice").style.opacity=1;
+    document.getElementById("loginMoudle").style.opacity=0;
+    let ua=window.navigator.userAgent.toLowerCase();
+    if(ua.match(/MicroMessenger/i)=='micromessenger'){
+      document.getElementById("notice").style.opacity=1;
+      document.getElementById("loginMoudle").style.opacity=0;
+    }else {
+      console.log(ua)
+      document.getElementById("notice").style.opacity=0;
+      document.getElementById("loginMoudle").style.opacity=1;
+    }
+  }
   function Tologin() {
     // alert("答题已结束！");
     let name = document.getElementById("name").value;
@@ -51,26 +68,30 @@
               number
       )
       ) {
-        axios.post("http://39.98.173.248/teacher/Login", {
-          teacherName: name,
-          teacherId: number,
-        }).then((res) => {
-          console.log(res);
-          if (res.data.code == 0) {
-            alert("登录成功!");
-            document.getElementById("loginpage").style.opacity = "0";
-            let url = "./pages/loading.html" + "?" + "teacherId=" + number;
-            setTimeout(() => {
-              window.location.replace(url);
-            }, 800);
-          } else if (res.data.code == 1) {
-            alert(res.data.errMessage);
-            return false;
-          }
-        }).catch(err=>{
-          console.log(err);
-          alert("出错了，请联系管理员!");
-        });
+        let url = "./pages/loading.html" + "?" + "teacherId=" + number;
+        setTimeout(() => {
+          window.location.replace(url);
+        }, 800);
+        // axios.post("http://39.98.173.248/teacher/Login", {
+        //   teacherName: name,
+        //   teacherId: number,
+        // }).then((res) => {
+        //   console.log(res);
+        //   if (res.data.code == 0) {
+        //     alert("登录成功!");
+        //     document.getElementById("loginpage").style.opacity = "0";
+        //     let url = "./pages/loading.html" + "?" + "teacherId=" + number;
+        //     setTimeout(() => {
+        //       window.location.replace(url);
+        //     }, 800);
+        //   } else if (res.data.code == 1) {
+        //     alert(res.data.errMessage);
+        //     return false;
+        //   }
+        // }).catch(err=>{
+        //   console.log(err);
+        //   alert("出错了，请联系管理员!");
+        // });
       } else {
         return false;
       }

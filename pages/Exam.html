@@ -485,9 +485,9 @@
     if (location.href.split("=")[2] != 0) {
       // 上传分数
       axios.post("http://39.98.173.248/teacher/upScore", {
-                "teacherId": teacherId,
-                "score": Fen,
-              })
+        "teacherId": teacherId,
+        "score": Fen,
+      })
               .then((res) => {
                 console.log(res);
               });
