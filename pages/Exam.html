@@ -423,6 +423,7 @@
     // 提交分数
     function submit() {
         clearInterval(timer);
+        $("#btn").attr("disabled", true);
         let questionArray = new Array(
             "Q1",
             "Q2",
@@ -480,7 +481,6 @@
                 resultArray[i] = Name1(questionArray[i]);
             }
         }
-        $("#btn").attr("disabled", true);
         for (let i = 0; i < questionArray.length; i++) {
             // 单选
             if (aryAns[i] == resultArray[i]) {
@@ -499,19 +499,21 @@
         let Fen = right_number * 5;
         if (location.href.split("=")[2] != 0) {
             // 上传分数
-            axios.post("http://localhost:8089/result/uploadResult", {
+            axios.post("http://123.60.15.247:8089/assessment/result/uploadResult", {
                 "jobNumber": jobNumber,
                 "result": Fen
             }).then((res) => {
                 console.log(res);
             });
         }
-        if (Fen >= 0) {
-            // document.getElementById("download").href = "http://rhrxzmtml.hn-bkt.clouddn.com/" + jobNumber + ".pdf";
-            document.getElementById("download").href = "https://storage.jd.com/fm-eicore/031002200211-96929159.pdf?utm_source=dmp&utm_medium=cpc&utm_campaign=dmp_155&utm_term=dmp_155_624261_70DFA6AEF6BB7D5E17A38D8619ED0287_1663001840993&Expires=2608526625&AccessKey=bfac05320eaf11cc80cf1823e4fb87d98523fc94&Signature=oVaP5QqAgj2ztWXf54k3bUscAs4%3D";
-            document.getElementById("successpage").style.opacity = "1";
-        } else {
-            document.getElementById("lostpage").style.opacity = "1";
+        if (count > 0) {
+            if (Fen >= 0) {
+                // document.getElementById("download").href = "http://123.60.15.247:8089/assessment/file/" + jobNumber + ".pdf";
+                document.getElementById("download").href = "http://123.60.15.247:8089/assessment/file/test.pdf";
+                document.getElementById("successpage").style.opacity = "1";
+            } else {
+                document.getElementById("lostpage").style.opacity = "1";
+            }
         }
         document.getElementById("Fen").innerText = Fen;
         document.getElementById("right_number").innerText = right_number;
@@ -547,6 +549,14 @@
             }
         }
         return intHot;
+    }
+
+    function back() {
+        document.getElementById("Outside").style.opacity = "0";
+        let url = "./loading.html" + "?" + "jobNumber=" + jobNumber;
+        setTimeout(() => {
+            window.location.replace(url);
+        }, 800);
     }
 </script>
 

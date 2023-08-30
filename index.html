@@ -24,11 +24,11 @@
             <div class="user">
                 <div class="username">
                     <img src="./img/username.png" width="20px" height="20px"/>
-                    <input type="text" placeholder="请输入姓名" onclick="ChangeTopimg1()" id="name"/>
+                    <input type="text" placeholder="请输入姓名" onclick="ChangeTopimg1()" id="userName"/>
                 </div>
                 <div class="password">
                     <img src="./img/number.png" width="20px" height="20px"/>
-                    <input type="text" placeholder="请输入工号" onclick="ChangeTopimg2()" id="number"/>
+                    <input type="text" placeholder="请输入工号" onclick="ChangeTopimg2()" id="jobNumber"/>
                 </div>
             </div>
             <button type="submit" onclick="Tologin()">
@@ -41,7 +41,6 @@
 
 <script>
     function judgeBrowser() {
-        console.log("aaa")
         document.getElementById("notice").style.opacity = 1;
         document.getElementById("loginMoudle").style.opacity = 0;
         let ua = window.navigator.userAgent.toLowerCase();
@@ -57,22 +56,21 @@
 
     function Tologin() {
         // alert("答题已结束！");
-        let name = document.getElementById("name").value;
-        let number = document.getElementById("number").value;
-        jobNumber = document.getElementById("number").value;
-        if (name == "" || number == "") {
+        let userName = document.getElementById("userName").value;
+        let jobNumber = document.getElementById("jobNumber").value;
+        if (userName == "" || jobNumber == "") {
             alert("请将姓名、工号填写完整");
         } else {
-            if (confirm("请您确认\n填写的姓名和工号是否正确\n姓名：" + name + "\n工号：" + number)) {
-                axios.post("http://localhost:8089/login/loginByAccount", {
-                    userName: name,
-                    jobNumber: number,
+            if (confirm("请您确认\n填写的姓名和工号是否正确\n姓名：" + userName + "\n工号：" + jobNumber)) {
+                axios.post("http://123.60.15.247:8089/assessment/login/loginByAccount", {
+                    userName: userName,
+                    jobNumber: jobNumber,
                 }).then((res) => {
                     console.log(res);
                     if (res.data.status === "success") {
                         alert("登录成功!");
                         document.getElementById("loginpage").style.opacity = "0";
-                        let url = "./pages/loading.html" + "?" + "jobNumber=" + number;
+                        let url = "./pages/loading.html" + "?" + "jobNumber=" + jobNumber;
                         setTimeout(() => {
                             window.location.replace(url);
                         }, 800);

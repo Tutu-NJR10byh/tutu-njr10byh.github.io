@@ -96,7 +96,7 @@
     function show() {
         // console.log(location.href);
         jobNumber = location.href.split("=")[1];
-        axios.post("http://localhost:8089/result/getResultByJobNumber?jobNumber=" + jobNumber)
+        axios.post("http://123.60.15.247:8089/assessment/result/getResultByJobNumber?jobNumber=" + jobNumber)
             .then((res) => {
                 console.log(res)
                 let resultList = [];
