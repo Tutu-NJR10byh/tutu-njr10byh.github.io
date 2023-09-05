@@ -507,9 +507,8 @@
             });
         }
         if (count > 0) {
-            if (Fen >= 0) {
-                // document.getElementById("download").href = "http://123.60.15.247:8089/assessment/file/" + jobNumber + ".pdf";
-                document.getElementById("download").href = "http://123.60.15.247:8089/assessment/file/test.png";
+            if (Fen >= 85) {
+                document.getElementById("download").href = "http://123.60.15.247:8089/assessment/file/" + jobNumber + ".png";
                 document.getElementById("successpage").style.opacity = "1";
             } else {
                 document.getElementById("lostpage").style.opacity = "1";
